@@ -46,18 +46,21 @@ namespace Thorg_Installer
             this.chkToS = new System.Windows.Forms.CheckBox();
             this.tabDestination = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkCompGMiner = new System.Windows.Forms.CheckBox();
+            this.chkCompWasi = new System.Windows.Forms.CheckBox();
+            this.chkCompThorg = new System.Windows.Forms.CheckBox();
+            this.chkCompYagna = new System.Windows.Forms.CheckBox();
             this.btnBrowseLocation = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lbOutputPath = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
+            this.lbVersion = new System.Windows.Forms.Label();
+            this.prgTotal = new System.Windows.Forms.ProgressBar();
+            this.lbProgress = new System.Windows.Forms.Label();
             richTextBox1 = new System.Windows.Forms.RichTextBox();
             richTextBox2 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -69,6 +72,7 @@ namespace Thorg_Installer
             this.tabToS.SuspendLayout();
             this.tabDestination.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -233,7 +237,7 @@ namespace Thorg_Installer
             this.tabDestination.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabDestination.Controls.Add(this.groupBox1);
             this.tabDestination.Controls.Add(this.btnBrowseLocation);
-            this.tabDestination.Controls.Add(this.label4);
+            this.tabDestination.Controls.Add(this.lbOutputPath);
             this.tabDestination.Controls.Add(this.label3);
             this.tabDestination.Location = new System.Drawing.Point(4, 25);
             this.tabDestination.Name = "tabDestination";
@@ -245,10 +249,10 @@ namespace Thorg_Installer
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBox4);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.chkCompGMiner);
+            this.groupBox1.Controls.Add(this.chkCompWasi);
+            this.groupBox1.Controls.Add(this.chkCompThorg);
+            this.groupBox1.Controls.Add(this.chkCompYagna);
             this.groupBox1.Location = new System.Drawing.Point(30, 64);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(329, 142);
@@ -256,55 +260,55 @@ namespace Thorg_Installer
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Components";
             // 
-            // checkBox4
+            // chkCompGMiner
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = true;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Location = new System.Drawing.Point(19, 91);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(106, 17);
-            this.checkBox4.TabIndex = 3;
-            this.checkBox4.Text = "Eth mining Driver";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.chkCompGMiner.AutoSize = true;
+            this.chkCompGMiner.Checked = true;
+            this.chkCompGMiner.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompGMiner.Location = new System.Drawing.Point(19, 91);
+            this.chkCompGMiner.Name = "chkCompGMiner";
+            this.chkCompGMiner.Size = new System.Drawing.Size(106, 17);
+            this.chkCompGMiner.TabIndex = 3;
+            this.chkCompGMiner.Text = "Eth mining Driver";
+            this.chkCompGMiner.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // chkCompWasi
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(19, 67);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(87, 17);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "Wasm Driver";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.chkCompWasi.AutoSize = true;
+            this.chkCompWasi.Checked = true;
+            this.chkCompWasi.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompWasi.Location = new System.Drawing.Point(19, 67);
+            this.chkCompWasi.Name = "chkCompWasi";
+            this.chkCompWasi.Size = new System.Drawing.Size(87, 17);
+            this.chkCompWasi.TabIndex = 2;
+            this.chkCompWasi.Text = "Wasm Driver";
+            this.chkCompWasi.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // chkCompThorg
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(19, 43);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(68, 17);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Thorg UI";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.chkCompThorg.AutoSize = true;
+            this.chkCompThorg.Checked = true;
+            this.chkCompThorg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompThorg.Enabled = false;
+            this.chkCompThorg.Location = new System.Drawing.Point(19, 43);
+            this.chkCompThorg.Name = "chkCompThorg";
+            this.chkCompThorg.Size = new System.Drawing.Size(68, 17);
+            this.chkCompThorg.TabIndex = 1;
+            this.chkCompThorg.Text = "Thorg UI";
+            this.chkCompThorg.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkCompYagna
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(19, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(140, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Golem Provider Runtime";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkCompYagna.AutoSize = true;
+            this.chkCompYagna.Checked = true;
+            this.chkCompYagna.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompYagna.Enabled = false;
+            this.chkCompYagna.Location = new System.Drawing.Point(19, 19);
+            this.chkCompYagna.Name = "chkCompYagna";
+            this.chkCompYagna.Size = new System.Drawing.Size(140, 17);
+            this.chkCompYagna.TabIndex = 0;
+            this.chkCompYagna.Text = "Golem Provider Runtime";
+            this.chkCompYagna.UseVisualStyleBackColor = true;
             // 
             // btnBrowseLocation
             // 
@@ -314,15 +318,16 @@ namespace Thorg_Installer
             this.btnBrowseLocation.TabIndex = 2;
             this.btnBrowseLocation.Text = "B&rowse";
             this.btnBrowseLocation.UseVisualStyleBackColor = true;
+            this.btnBrowseLocation.Click += new System.EventHandler(this.btnBrowseLocation_Click);
             // 
-            // label4
+            // lbOutputPath
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(92, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(267, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "C:\\Users\\golem-dev\\AppData\\Roaming\\GolemFactory";
+            this.lbOutputPath.AutoSize = true;
+            this.lbOutputPath.Location = new System.Drawing.Point(92, 16);
+            this.lbOutputPath.Name = "lbOutputPath";
+            this.lbOutputPath.Size = new System.Drawing.Size(267, 13);
+            this.lbOutputPath.TabIndex = 1;
+            this.lbOutputPath.Text = "C:\\Users\\golem-dev\\AppData\\Roaming\\GolemFactory";
             // 
             // label3
             // 
@@ -335,11 +340,14 @@ namespace Thorg_Installer
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lbProgress);
+            this.tabPage1.Controls.Add(this.prgTotal);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(8);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(456, 314);
             this.tabPage1.TabIndex = 4;
+            this.tabPage1.Tag = "Install";
             this.tabPage1.Text = "Install";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
@@ -395,11 +403,38 @@ namespace Thorg_Installer
             this.btnNext.UseVisualStyleBackColor = true;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
+            // lbVersion
+            // 
+            this.lbVersion.AutoSize = true;
+            this.lbVersion.Location = new System.Drawing.Point(104, 182);
+            this.lbVersion.Name = "lbVersion";
+            this.lbVersion.Size = new System.Drawing.Size(46, 13);
+            this.lbVersion.TabIndex = 3;
+            this.lbVersion.Text = "v0.0.0.0";
+            // 
+            // prgTotal
+            // 
+            this.prgTotal.Location = new System.Drawing.Point(21, 53);
+            this.prgTotal.Name = "prgTotal";
+            this.prgTotal.Size = new System.Drawing.Size(385, 23);
+            this.prgTotal.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prgTotal.TabIndex = 0;
+            this.prgTotal.Value = 100;
+            // 
+            // lbProgress
+            // 
+            this.lbProgress.AutoSize = true;
+            this.lbProgress.Location = new System.Drawing.Point(21, 34);
+            this.lbProgress.Name = "lbProgress";
+            this.lbProgress.Size = new System.Drawing.Size(0, 13);
+            this.lbProgress.TabIndex = 1;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(717, 355);
+            this.Controls.Add(this.lbVersion);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabWizard);
             this.Controls.Add(this.pictureBox1);
@@ -423,11 +458,14 @@ namespace Thorg_Installer
             this.tabDestination.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -448,17 +486,20 @@ namespace Thorg_Installer
         private System.Windows.Forms.CheckBox chkSentry;
         private System.Windows.Forms.CheckBox chkToS;
         private System.Windows.Forms.Button btnBrowseLocation;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbOutputPath;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkCompGMiner;
+        private System.Windows.Forms.CheckBox chkCompWasi;
+        private System.Windows.Forms.CheckBox chkCompThorg;
+        private System.Windows.Forms.CheckBox chkCompYagna;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Label lbVersion;
+        private System.Windows.Forms.Label lbProgress;
+        private System.Windows.Forms.ProgressBar prgTotal;
     }
 }
 
