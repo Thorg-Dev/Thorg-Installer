@@ -1,0 +1,464 @@
+﻿
+namespace Thorg_Installer
+{
+    partial class MainWindow
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.RichTextBox richTextBox1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.Windows.Forms.RichTextBox richTextBox2;
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tabWizard = new System.Windows.Forms.TabControl();
+            this.tabPageWelcome = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabLicense = new System.Windows.Forms.TabPage();
+            this.chkLicense = new System.Windows.Forms.CheckBox();
+            this.tabToS = new System.Windows.Forms.TabPage();
+            this.chkSentry = new System.Windows.Forms.CheckBox();
+            this.chkToS = new System.Windows.Forms.CheckBox();
+            this.tabDestination = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnBrowseLocation = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            richTextBox1 = new System.Windows.Forms.RichTextBox();
+            richTextBox2 = new System.Windows.Forms.RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabWizard.SuspendLayout();
+            this.tabPageWelcome.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.tabLicense.SuspendLayout();
+            this.tabToS.SuspendLayout();
+            this.tabDestination.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new System.Drawing.Point(6, 6);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new System.Drawing.Size(444, 240);
+            richTextBox1.TabIndex = 0;
+            richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.Location = new System.Drawing.Point(3, 3);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.ReadOnly = true;
+            richTextBox2.Size = new System.Drawing.Size(450, 210);
+            richTextBox2.TabIndex = 0;
+            richTextBox2.Text = resources.GetString("richTextBox2.Text");
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBox1.Image = global::Thorg_Installer.Properties.Resources.app_logo;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Padding = new System.Windows.Forms.Padding(20, 60, 20, 20);
+            this.pictureBox1.Size = new System.Drawing.Size(241, 343);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // tabWizard
+            // 
+            this.tabWizard.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabWizard.Controls.Add(this.tabPageWelcome);
+            this.tabWizard.Controls.Add(this.tabLicense);
+            this.tabWizard.Controls.Add(this.tabToS);
+            this.tabWizard.Controls.Add(this.tabDestination);
+            this.tabWizard.Controls.Add(this.tabPage1);
+            this.tabWizard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabWizard.Location = new System.Drawing.Point(247, 6);
+            this.tabWizard.Name = "tabWizard";
+            this.tabWizard.SelectedIndex = 0;
+            this.tabWizard.Size = new System.Drawing.Size(464, 343);
+            this.tabWizard.TabIndex = 1;
+            this.tabWizard.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabWizard_Selecting);
+            this.tabWizard.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabWizard_Selected);
+            // 
+            // tabPageWelcome
+            // 
+            this.tabPageWelcome.Controls.Add(this.groupBox2);
+            this.tabPageWelcome.Location = new System.Drawing.Point(4, 25);
+            this.tabPageWelcome.Margin = new System.Windows.Forms.Padding(6);
+            this.tabPageWelcome.Name = "tabPageWelcome";
+            this.tabPageWelcome.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageWelcome.Size = new System.Drawing.Size(456, 314);
+            this.tabPageWelcome.TabIndex = 0;
+            this.tabPageWelcome.Text = "Welcome";
+            this.tabPageWelcome.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.flowLayoutPanel2);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(450, 259);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.label2);
+            this.flowLayoutPanel2.Controls.Add(this.label1);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(444, 240);
+            this.flowLayoutPanel2.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(287, 20);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Welcome to the Thorg Miner Setup";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 30, 3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(287, 26);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "The Setup Wizard will install Thorg Miner on your computer.\r\nClik Next to Continu" +
+    "e or Cancel to exit the Setup Wizard.\r\n";
+            // 
+            // tabLicense
+            // 
+            this.tabLicense.Controls.Add(this.chkLicense);
+            this.tabLicense.Controls.Add(richTextBox1);
+            this.tabLicense.Location = new System.Drawing.Point(4, 25);
+            this.tabLicense.Name = "tabLicense";
+            this.tabLicense.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLicense.Size = new System.Drawing.Size(456, 314);
+            this.tabLicense.TabIndex = 2;
+            this.tabLicense.Text = "License";
+            this.tabLicense.UseVisualStyleBackColor = true;
+            // 
+            // chkLicense
+            // 
+            this.chkLicense.AutoSize = true;
+            this.chkLicense.Location = new System.Drawing.Point(6, 252);
+            this.chkLicense.Name = "chkLicense";
+            this.chkLicense.Size = new System.Drawing.Size(216, 17);
+            this.chkLicense.TabIndex = 1;
+            this.chkLicense.Text = "I accept the terms in License Agreement";
+            this.chkLicense.UseVisualStyleBackColor = true;
+            this.chkLicense.CheckedChanged += new System.EventHandler(this.ChkUpdate);
+            // 
+            // tabToS
+            // 
+            this.tabToS.Controls.Add(this.chkSentry);
+            this.tabToS.Controls.Add(this.chkToS);
+            this.tabToS.Controls.Add(richTextBox2);
+            this.tabToS.Location = new System.Drawing.Point(4, 25);
+            this.tabToS.Name = "tabToS";
+            this.tabToS.Size = new System.Drawing.Size(456, 314);
+            this.tabToS.TabIndex = 3;
+            this.tabToS.Text = "Terms Of Service";
+            this.tabToS.UseVisualStyleBackColor = true;
+            // 
+            // chkSentry
+            // 
+            this.chkSentry.AutoSize = true;
+            this.chkSentry.Location = new System.Drawing.Point(16, 244);
+            this.chkSentry.Name = "chkSentry";
+            this.chkSentry.Size = new System.Drawing.Size(232, 17);
+            this.chkSentry.TabIndex = 2;
+            this.chkSentry.Text = "Automatically send application crash reports";
+            this.chkSentry.UseVisualStyleBackColor = true;
+            // 
+            // chkToS
+            // 
+            this.chkToS.AutoSize = true;
+            this.chkToS.Location = new System.Drawing.Point(16, 220);
+            this.chkToS.Name = "chkToS";
+            this.chkToS.Size = new System.Drawing.Size(200, 17);
+            this.chkToS.TabIndex = 1;
+            this.chkToS.Text = "Accept Golem Platform Terms of Use";
+            this.chkToS.UseVisualStyleBackColor = true;
+            this.chkToS.CheckedChanged += new System.EventHandler(this.ChkUpdate);
+            // 
+            // tabDestination
+            // 
+            this.tabDestination.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabDestination.Controls.Add(this.groupBox1);
+            this.tabDestination.Controls.Add(this.btnBrowseLocation);
+            this.tabDestination.Controls.Add(this.label4);
+            this.tabDestination.Controls.Add(this.label3);
+            this.tabDestination.Location = new System.Drawing.Point(4, 25);
+            this.tabDestination.Name = "tabDestination";
+            this.tabDestination.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDestination.Size = new System.Drawing.Size(456, 314);
+            this.tabDestination.TabIndex = 1;
+            this.tabDestination.Text = "Setup";
+            this.tabDestination.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox4);
+            this.groupBox1.Controls.Add(this.checkBox3);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Location = new System.Drawing.Point(30, 64);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(329, 142);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Components";
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Location = new System.Drawing.Point(19, 91);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(106, 17);
+            this.checkBox4.TabIndex = 3;
+            this.checkBox4.Text = "Eth mining Driver";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(19, 67);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(87, 17);
+            this.checkBox3.TabIndex = 2;
+            this.checkBox3.Text = "Wasm Driver";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(19, 43);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(68, 17);
+            this.checkBox2.TabIndex = 1;
+            this.checkBox2.Text = "Thorg UI";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(19, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(140, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Golem Provider Runtime";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // btnBrowseLocation
+            // 
+            this.btnBrowseLocation.Location = new System.Drawing.Point(365, 11);
+            this.btnBrowseLocation.Name = "btnBrowseLocation";
+            this.btnBrowseLocation.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseLocation.TabIndex = 2;
+            this.btnBrowseLocation.Text = "B&rowse";
+            this.btnBrowseLocation.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(92, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(267, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "C:\\Users\\golem-dev\\AppData\\Roaming\\GolemFactory";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Location:";
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(8);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(456, 314);
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "Install";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.flowLayoutPanel1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(247, 305);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(60, 6, 60, 6);
+            this.panel1.Size = new System.Drawing.Size(464, 44);
+            this.panel1.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.Controls.Add(this.btnBack);
+            this.flowLayoutPanel1.Controls.Add(this.btnNext);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(126, 9);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(238, 31);
+            this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // btnBack
+            // 
+            this.btnBack.AutoSize = true;
+            this.btnBack.Enabled = false;
+            this.btnBack.Location = new System.Drawing.Point(0, 0);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBack.MinimumSize = new System.Drawing.Size(0, 13);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(90, 31);
+            this.btnBack.TabIndex = 0;
+            this.btnBack.Text = "&Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnNext
+            // 
+            this.btnNext.AutoSize = true;
+            this.btnNext.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnNext.Location = new System.Drawing.Point(90, 0);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(0);
+            this.btnNext.MinimumSize = new System.Drawing.Size(0, 13);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(90, 31);
+            this.btnNext.TabIndex = 1;
+            this.btnNext.Text = "&Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // MainWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(717, 355);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.tabWizard);
+            this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "MainWindow";
+            this.Padding = new System.Windows.Forms.Padding(6);
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.Text = "[Thorg Installer]";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabWizard.ResumeLayout(false);
+            this.tabPageWelcome.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
+            this.tabLicense.ResumeLayout(false);
+            this.tabLicense.PerformLayout();
+            this.tabToS.ResumeLayout(false);
+            this.tabToS.PerformLayout();
+            this.tabDestination.ResumeLayout(false);
+            this.tabDestination.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TabControl tabWizard;
+        private System.Windows.Forms.TabPage tabPageWelcome;
+        private System.Windows.Forms.TabPage tabDestination;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.TabPage tabLicense;
+        private System.Windows.Forms.TabPage tabToS;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkLicense;
+        private System.Windows.Forms.CheckBox chkSentry;
+        private System.Windows.Forms.CheckBox chkToS;
+        private System.Windows.Forms.Button btnBrowseLocation;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+    }
+}
+
