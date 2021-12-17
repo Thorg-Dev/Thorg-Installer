@@ -25,11 +25,13 @@ namespace Thorg_Installer
 
         private Component[] _downloads = null;
 
-        private string CachePath => Path.Combine(InstallDir, "cache");
+        private string CachePath => Path.Combine(InstallDir, @"cache");
 
         public string VersionPath => Path.Combine(InstallDir, $"v{Descriptor.Version}");
 
-        public string ThorgExePath => Path.Combine(VersionPath, "ThorgMiner.exe");
+        public string ThorgExePath => Path.Combine(VersionPath, @"ThorgMiner.exe");
+
+        private string DescriptorPath => Path.Combine(InstallDir, @"thorg.xml");
 
         public Installer(Uri baseUri)
         {
@@ -39,7 +41,8 @@ namespace Thorg_Installer
 
         public bool Prepare()
         {
-            var currentDescriptorPath = Path.Combine(InstallDir, @"thorg.xml");
+            var currentDescriptorPath = DescriptorPath;
+
             if (File.Exists(currentDescriptorPath))
             {
                 var currentDescriptor = App.FromFile(currentDescriptorPath);
@@ -82,6 +85,8 @@ namespace Thorg_Installer
                     progress?.Invoke($"Extracting {c.Download}", ++step, total, false);
                     ZipFile.ExtractToDirectory(Path.Combine(cache, $"{c.Download}.zip"), outputDir);
                 }
+                SelfInstall();
+
                 IShellLink link = (IShellLink)new ShellLink();
                 link.SetDescription("Thorg Miner");
                 link.SetPath(ThorgExePath);
@@ -96,8 +101,23 @@ namespace Thorg_Installer
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 file.Save(Path.Combine(appStartMenuPath, "Thorg Miner.lnk"), false);
                 file.Save(Path.Combine(InstallDir, "Thorg.lnk"), false);
+
                 progress?.Invoke($"Done", total, total, true);
+                Descriptor.ToFile(DescriptorPath);
             });
+        }
+
+        /// <summary>
+        /// Installs it self.
+        /// </summary>
+        private void SelfInstall()
+        {
+            var srcPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            var destination = Path.Combine(InstallDir, "Thorg Installer.exe");
+            if (srcPath != destination)
+            {
+                File.Copy(srcPath, destination, true);
+            }
         }
 
         private static void CreateDirIfNotExists(string path)

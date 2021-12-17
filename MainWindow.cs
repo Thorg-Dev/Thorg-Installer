@@ -51,6 +51,7 @@ namespace Thorg_Installer
         {
             btnBack.Enabled = _step > 0;
             btnNext.Enabled = CanDoNext();
+            btnCancel.Visible = _step == 0;
             if (e.TabPage.Text == "Setup")
             {
                 btnNext.Text = "Install";
@@ -147,8 +148,14 @@ namespace Thorg_Installer
                 lbOutputPath.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
 
         private int _step = 0;
         private Installer _installer = new Installer(new Uri("https://golem-releases.cdn.golem.network/thorg/"));
+
+
     }
 }

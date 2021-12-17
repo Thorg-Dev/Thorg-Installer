@@ -77,6 +77,15 @@ namespace Thorg_Installer.Config
             }
         }
 
+        public void ToFile(string path)
+        {
+            var xs = new XmlSerializer(typeof(App));
+            using (var f = File.CreateText(path))
+            {
+                xs.Serialize(f, this);
+            }
+        }
+
         public Component this[string id]
         {
             get

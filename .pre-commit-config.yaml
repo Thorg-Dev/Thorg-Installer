@@ -1,0 +1,16 @@
+repos:
+    -   repo: https://github.com/pre-commit/pre-commit-hooks
+        rev: v4.0.1
+        hooks:
+            -   id: trailing-whitespace
+            -   id: end-of-file-fixer
+            -   id: check-yaml
+            -   id: check-added-large-files
+    -   repo: local
+        hooks:
+        #Use dotnet format already installed on your machine
+            -   id: dotnet-format
+                name: dotnet-format
+                language: system
+                entry: dotnet format "Thorg Installer.csproj"  --include
+                types_or: ["c#", "vb"]
