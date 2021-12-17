@@ -130,8 +130,14 @@ namespace Thorg_Installer
                             Step = step,
                             Total = total
                         });
-                        if (HashFileSHA256(downloadedFile).Equals(c.Sha256, StringComparison.OrdinalIgnoreCase))
+                        var fileChecksum = HashFileSHA256(downloadedFile);
+                        if (!fileChecksum.Equals(c.Sha256, StringComparison.OrdinalIgnoreCase))
                         {
+                            progress?.Invoke(new InstallerEvent()
+                            {
+                                Message = $"Invalid checksum for {c.Download}",
+                                IsError = true
+                            });
                             return;
                         }
                     }

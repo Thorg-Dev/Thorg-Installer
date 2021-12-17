@@ -54,16 +54,16 @@ namespace Thorg_Installer
             this.lbOutputPath = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lbProgressError = new System.Windows.Forms.Label();
             this.lbProgress = new System.Windows.Forms.Label();
             this.prgTotal = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnReinstall = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.lbVersion = new System.Windows.Forms.Label();
-            this.btnReinstall = new System.Windows.Forms.Button();
-            this.lbProgressError = new System.Windows.Forms.Label();
             richTextBox1 = new System.Windows.Forms.RichTextBox();
             richTextBox2 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -355,6 +355,17 @@ namespace Thorg_Installer
             this.tabPage1.Text = "Install";
             this.tabPage1.UseVisualStyleBackColor = true;
             //
+            // lbProgressError
+            //
+            this.lbProgressError.AutoSize = true;
+            this.lbProgressError.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbProgressError.ForeColor = System.Drawing.Color.Red;
+            this.lbProgressError.Location = new System.Drawing.Point(18, 127);
+            this.lbProgressError.Name = "lbProgressError";
+            this.lbProgressError.Size = new System.Drawing.Size(47, 18);
+            this.lbProgressError.TabIndex = 2;
+            this.lbProgressError.Text = "Error";
+            //
             // lbProgress
             //
             this.lbProgress.AutoSize = true;
@@ -385,6 +396,17 @@ namespace Thorg_Installer
             this.panel1.Padding = new System.Windows.Forms.Padding(60, 6, 60, 6);
             this.panel1.Size = new System.Drawing.Size(464, 44);
             this.panel1.TabIndex = 2;
+            //
+            // btnReinstall
+            //
+            this.btnReinstall.Location = new System.Drawing.Point(16, 9);
+            this.btnReinstall.Name = "btnReinstall";
+            this.btnReinstall.Size = new System.Drawing.Size(75, 31);
+            this.btnReinstall.TabIndex = 2;
+            this.btnReinstall.Text = "Reinstall";
+            this.btnReinstall.UseVisualStyleBackColor = true;
+            this.btnReinstall.Visible = false;
+            this.btnReinstall.Click += new System.EventHandler(this.btnReinstall_Click);
             //
             // btnCancel
             //
@@ -445,27 +467,6 @@ namespace Thorg_Installer
             this.lbVersion.Size = new System.Drawing.Size(46, 13);
             this.lbVersion.TabIndex = 3;
             this.lbVersion.Text = "v0.0.0.0";
-            //
-            // btnReinstall
-            //
-            this.btnReinstall.Location = new System.Drawing.Point(16, 9);
-            this.btnReinstall.Name = "btnReinstall";
-            this.btnReinstall.Size = new System.Drawing.Size(75, 31);
-            this.btnReinstall.TabIndex = 2;
-            this.btnReinstall.Text = "Reinstall";
-            this.btnReinstall.UseVisualStyleBackColor = true;
-            this.btnReinstall.Click += new System.EventHandler(this.btnReinstall_Click);
-            //
-            // lbProgressError
-            //
-            this.lbProgressError.AutoSize = true;
-            this.lbProgressError.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbProgressError.ForeColor = System.Drawing.Color.Red;
-            this.lbProgressError.Location = new System.Drawing.Point(18, 127);
-            this.lbProgressError.Name = "lbProgressError";
-            this.lbProgressError.Size = new System.Drawing.Size(47, 18);
-            this.lbProgressError.TabIndex = 2;
-            this.lbProgressError.Text = "Error";
             //
             // MainWindow
             //
