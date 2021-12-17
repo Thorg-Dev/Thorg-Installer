@@ -57,11 +57,13 @@ namespace Thorg_Installer
             this.lbProgress = new System.Windows.Forms.Label();
             this.prgTotal = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.lbVersion = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnReinstall = new System.Windows.Forms.Button();
+            this.lbProgressError = new System.Windows.Forms.Label();
             richTextBox1 = new System.Windows.Forms.RichTextBox();
             richTextBox2 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -341,6 +343,7 @@ namespace Thorg_Installer
             //
             // tabPage1
             //
+            this.tabPage1.Controls.Add(this.lbProgressError);
             this.tabPage1.Controls.Add(this.lbProgress);
             this.tabPage1.Controls.Add(this.prgTotal);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
@@ -372,6 +375,7 @@ namespace Thorg_Installer
             // panel1
             //
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.btnReinstall);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -381,6 +385,17 @@ namespace Thorg_Installer
             this.panel1.Padding = new System.Windows.Forms.Padding(60, 6, 60, 6);
             this.panel1.Size = new System.Drawing.Size(464, 44);
             this.panel1.TabIndex = 2;
+            //
+            // btnCancel
+            //
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCancel.Location = new System.Drawing.Point(370, 9);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 31);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             //
             // flowLayoutPanel1
             //
@@ -431,16 +446,26 @@ namespace Thorg_Installer
             this.lbVersion.TabIndex = 3;
             this.lbVersion.Text = "v0.0.0.0";
             //
-            // btnCancel
+            // btnReinstall
             //
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnCancel.Location = new System.Drawing.Point(370, 9);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 31);
-            this.btnCancel.TabIndex = 3;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnReinstall.Location = new System.Drawing.Point(16, 9);
+            this.btnReinstall.Name = "btnReinstall";
+            this.btnReinstall.Size = new System.Drawing.Size(75, 31);
+            this.btnReinstall.TabIndex = 2;
+            this.btnReinstall.Text = "Reinstall";
+            this.btnReinstall.UseVisualStyleBackColor = true;
+            this.btnReinstall.Click += new System.EventHandler(this.btnReinstall_Click);
+            //
+            // lbProgressError
+            //
+            this.lbProgressError.AutoSize = true;
+            this.lbProgressError.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbProgressError.ForeColor = System.Drawing.Color.Red;
+            this.lbProgressError.Location = new System.Drawing.Point(18, 127);
+            this.lbProgressError.Name = "lbProgressError";
+            this.lbProgressError.Size = new System.Drawing.Size(47, 18);
+            this.lbProgressError.TabIndex = 2;
+            this.lbProgressError.Text = "Error";
             //
             // MainWindow
             //
@@ -457,6 +482,7 @@ namespace Thorg_Installer
             this.Padding = new System.Windows.Forms.Padding(6);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "[Thorg Installer]";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabWizard.ResumeLayout(false);
             this.tabPageWelcome.ResumeLayout(false);
@@ -514,5 +540,7 @@ namespace Thorg_Installer
         private System.Windows.Forms.Label lbProgress;
         private System.Windows.Forms.ProgressBar prgTotal;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnReinstall;
+        private System.Windows.Forms.Label lbProgressError;
     }
 }

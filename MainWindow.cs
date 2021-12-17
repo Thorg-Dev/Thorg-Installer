@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,14 @@ namespace Thorg_Installer
 {
     public partial class MainWindow : Form
     {
+
+        const int
+            PAGE_WLECOME = 0,
+            PAGE_LICENCE = 1,
+            PAGE_TOS = 2,
+            PAGE_SETUP = 3,
+            PAGE_INSTALL = 4;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,9 +58,11 @@ namespace Thorg_Installer
 
         private void tabWizard_Selected(object sender, TabControlEventArgs e)
         {
-            btnBack.Enabled = _step > 0;
+            btnBack.Enabled = _step > PAGE_WLECOME && _step != PAGE_INSTALL;
             btnNext.Enabled = CanDoNext();
-            btnCancel.Visible = _step == 0;
+            btnCancel.Visible = _step == PAGE_WLECOME;
+            btnReinstall.Visible = false;
+            lbProgressError.Visible = false;
             if (e.TabPage.Text == "Setup")
             {
                 btnNext.Text = "Install";
@@ -61,14 +72,14 @@ namespace Thorg_Installer
                 _installer.InstallDir = lbOutputPath.Text;
                 if (_installer.Prepare())
                 {
-                    _installer.Run((msg, step, total, done) => this.BeginInvoke((MethodInvoker)delegate ()
-                    {
-                        Debug.WriteLine($"{msg} {step * 100 / total}%");
-                        lbProgress.Text = msg;
-                        prgTotal.Maximum = total;
-                        prgTotal.Value = step;
-                        btnNext.Enabled = done;
-                    }));
+                    DoInstall();
+                }
+                else
+                {
+                    btnNext.Enabled = true;
+                    lbProgress.Text = "Already installed";
+                    prgTotal.Visible = false;
+                    btnReinstall.Visible = true;
                 }
                 btnNext.Text = "Done";
             }
@@ -78,6 +89,34 @@ namespace Thorg_Installer
             }
         }
 
+        private void DoInstall()
+        {
+            prgTotal.Visible = true;
+            _installer.Run((ev) => this.BeginInvoke((MethodInvoker)delegate ()
+            {
+                Debug.WriteLine($"{ev.Message}");
+                if (ev.IsError)
+                {
+                    lbProgressError.Visible = true;
+                    lbProgressError.Text = ev.Message;
+                }
+                else
+                {
+                    lbProgressError.Visible = false;
+                    lbProgress.Text = ev.Message;
+                }
+                if (ev.Total >= 0)
+                {
+                    prgTotal.Maximum = ev.Total;
+                }
+                if (ev.Step >= 0)
+                {
+                    prgTotal.Value = ev.Step;
+                }
+                btnNext.Enabled = ev.IsDone;
+            }));
+        }
+
         private void tabWizard_Selecting(object sender, TabControlCancelEventArgs e)
         {
             e.Cancel = e.TabPageIndex != _step;
@@ -85,8 +124,35 @@ namespace Thorg_Installer
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            CommitPage(_step);
             SwitchTo(_step + 1);
 
+        }
+
+        private void CommitPage(int step)
+        {
+            switch (step)
+            {
+                case PAGE_TOS:
+                    UpdateSentryFlag(chkSentry.Checked);
+                    break;
+            }
+        }
+
+        private void UpdateSentryFlag(bool sendReports)
+        {
+            using (var entry = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
+            {
+                entry.SetValue("sendReports", sendReports ? "yes" : "no");
+            }
+        }
+
+        public bool GetSentryFlag()
+        {
+            using (var entry = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
+            {
+                return "yes" == entry?.GetValue("sendReports") as string;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -99,13 +165,13 @@ namespace Thorg_Installer
         {
             switch (_step)
             {
-                case 0:
+                case PAGE_WLECOME:
                     return true;
-                case 1:
+                case PAGE_LICENCE:
                     return chkLicense.Checked;
-                case 2:
+                case PAGE_TOS:
                     return chkToS.Checked;
-                case 3:
+                case PAGE_SETUP:
                     return chkLicense.Checked && chkToS.Checked;
                 default:
                     return false;
@@ -148,12 +214,56 @@ namespace Thorg_Installer
                 lbOutputPath.Text = Path.GetDirectoryName(openFileDialog.FileName);
             }
         }
+
+        private async void btnReinstall_Click(object sender, EventArgs e)
+        {
+            btnReinstall.Visible = false;
+            btnNext.Enabled = false;
+            var exePath = _installer.ThorgExePath;
+            var processName = Path.GetFileNameWithoutExtension(exePath);
+            for (var retry = 0; retry < 5; ++retry)
+            {
+                bool sendKill = false;
+                foreach (var thorgProcess in Process.GetProcessesByName(processName))
+                {
+                    try
+                    {
+                        if (thorgProcess.MainModule.FileName == exePath)
+                        {
+                            thorgProcess.Kill();
+                            sendKill = true;
+                        }
+                    }
+                    catch (Win32Exception ex)
+                    {
+                        Debug.WriteLine($"unable to kill {thorgProcess}: {ex}");
+                    }
+                }
+                if (sendKill)
+                {
+                    await Task.Delay(1000);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            DoInstall();
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            chkSentry.Checked = GetSentryFlag();
+        }
+
         private int _step = 0;
+        private bool _reinstall = false;
         private Installer _installer = new Installer(new Uri("https://golem-releases.cdn.golem.network/thorg/"));
 
 

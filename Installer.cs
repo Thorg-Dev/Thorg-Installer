@@ -7,17 +7,33 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Thorg_Installer.Config;
 
 namespace Thorg_Installer
 {
+    class InstallerEvent
+    {
+        public string Message { get; set; }
+
+        public int Step { get; set; } = -1;
+
+        public int Total { get; set; } = -1;
+
+        public bool IsDone { get; set; }
+
+        public bool IsError { get; set; }
+
+    }
+
     /// <summary>
     /// General instalation logic
     /// </summary>
     class Installer
     {
+
         public Uri BaseUri { get; private set; }
         public App Descriptor { get; set; }
 
@@ -49,6 +65,7 @@ namespace Thorg_Installer
                 var diff = Descriptor.DiffrenceTo(currentDescriptor);
                 if (diff.Count == 0)
                 {
+                    _downloads = new Component[0];
                     return false;
                 }
                 _downloads = diff.ToArray();
@@ -60,29 +77,74 @@ namespace Thorg_Installer
             return true;
         }
 
-        public void Run(Action<string, int, int, bool> progress)
+        public void Run(Action<InstallerEvent> progress)
         {
             Task.Run(() =>
             {
                 var allComponents = Descriptor.GetAllComponents();
                 int step = 0;
                 int total = _downloads.Length + allComponents.Count + 1;
-                progress?.Invoke("Createing Directories", ++step, total, false);
+                progress?.Invoke(new InstallerEvent()
+                {
+                    Message = "Creating Directories",
+                    Step = step,
+                    Total = total
+                });
+
 
                 CreatePaths();
                 var cache = CachePath;
                 foreach (var c in _downloads)
                 {
+                    ++step;
                     using (var client = new WebClient())
                     {
-                        progress?.Invoke($"Downloading {c.Download}", ++step, total, false);
-                        client.DownloadFile(new Uri(BaseUri, c.Download), Path.Combine(cache, $"{c.Download}.zip"));
+                        var downloadedFile = Path.Combine(cache, $"{c.Download}.zip");
+                        if (File.Exists(downloadedFile))
+                        {
+                            progress?.Invoke(new InstallerEvent()
+                            {
+                                Message = $"Checking {c.Download}",
+                                Step = step,
+                                Total = total
+                            });
+                            if (HashFileSHA256(downloadedFile) == c.Sha256)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                File.Delete(downloadedFile);
+                            }
+                        }
+                        progress?.Invoke(new InstallerEvent()
+                        {
+                            Message = $"Downloading {c.Download}",
+                            Step = step,
+                            Total = total
+                        });
+                        client.DownloadFile(new Uri(BaseUri, c.Download), downloadedFile);
+                        progress?.Invoke(new InstallerEvent()
+                        {
+                            Message = $"Checking {c.Download}",
+                            Step = step,
+                            Total = total
+                        });
+                        if (HashFileSHA256(downloadedFile).Equals(c.Sha256, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return;
+                        }
                     }
                 }
                 var outputDir = VersionPath;
                 foreach (var c in Descriptor.GetAllComponents())
                 {
-                    progress?.Invoke($"Extracting {c.Download}", ++step, total, false);
+                    progress?.Invoke(new InstallerEvent()
+                    {
+                        Message = $"Extracting {c.Download}",
+                        Step = ++step,
+                        Total = total
+                    });
                     ZipFile.ExtractToDirectory(Path.Combine(cache, $"{c.Download}.zip"), outputDir);
                 }
                 SelfInstall();
@@ -101,9 +163,31 @@ namespace Thorg_Installer
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 file.Save(Path.Combine(appStartMenuPath, "Thorg Miner.lnk"), false);
                 file.Save(Path.Combine(InstallDir, "Thorg.lnk"), false);
-
-                progress?.Invoke($"Done", total, total, true);
+                progress?.Invoke(new InstallerEvent()
+                {
+                    Message = $"Done",
+                    Step = total,
+                    Total = total,
+                    IsDone = true
+                });
                 Descriptor.ToFile(DescriptorPath);
+            }).ContinueWith((t) =>
+            {
+                if (t.IsFaulted)
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine(t.Exception.Message);
+                    foreach (var innerEx in t.Exception.InnerExceptions)
+                    {
+                        sb.AppendLine(innerEx.Message);
+                    }
+                    progress?.Invoke(new InstallerEvent()
+                    {
+                        Message = sb.ToString(),
+                        IsDone = true,
+                        IsError = true
+                    });
+                }
             });
         }
 
@@ -145,6 +229,21 @@ namespace Thorg_Installer
         {
             CreateDirIfNotExists(CachePath);
             RecreateDir(VersionPath);
+        }
+
+        private string HashFileSHA256(string path)
+        {
+            using (var mySHA256 = SHA256.Create())
+            using (var f = File.OpenRead(path))
+            {
+                byte[] hashValue = mySHA256.ComputeHash(f);
+                var sb = new StringBuilder();
+                foreach (var b in hashValue)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+                return sb.ToString();
+            }
         }
 
 
