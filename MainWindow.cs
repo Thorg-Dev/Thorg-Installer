@@ -188,6 +188,7 @@ namespace Thorg_Installer
             {
                 tabWizard.ItemSize = new Size(69, 21);
                 tabWizard.TabPages.Remove(tabUninstall);
+                tabWizard.SizeMode = TabSizeMode.Normal;
                 SwitchTo(PAGE_INSTALL);
             }
             else
