@@ -63,11 +63,11 @@ namespace Thorg_Installer
             btnCancel.Visible = _step == PAGE_WLECOME;
             btnReinstall.Visible = false;
             lbProgressError.Visible = false;
-            if (e.TabPage.Text == "Setup")
+            if ("Setup".Equals(e.TabPage.Tag))
             {
                 btnNext.Text = "Install";
             }
-            else if (e.TabPage.Text == "Install")
+            else if ("Install".Equals(e.TabPage.Tag))
             {
                 _installer.InstallDir = lbOutputPath.Text;
                 if (_installer.Prepare())
@@ -151,7 +151,7 @@ namespace Thorg_Installer
         {
             using (var entry = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
             {
-                return "yes" == entry?.GetValue("sendReports") as string;
+                return entry == null || "yes" == entry?.GetValue("sendReports") as string;
             }
         }
 
@@ -263,7 +263,6 @@ namespace Thorg_Installer
         }
 
         private int _step = 0;
-        private bool _reinstall = false;
         private Installer _installer = new Installer(new Uri("https://golem-releases.cdn.golem.network/thorg/"));
 
 

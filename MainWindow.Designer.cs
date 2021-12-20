@@ -135,7 +135,7 @@ namespace Thorg_Installer
             this.tabPageWelcome.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageWelcome.Size = new System.Drawing.Size(456, 314);
             this.tabPageWelcome.TabIndex = 0;
-            this.tabPageWelcome.Text = "Welcome";
+            this.tabPageWelcome.Text = "1. Welcome";
             this.tabPageWelcome.UseVisualStyleBackColor = true;
             //
             // groupBox2
@@ -188,7 +188,8 @@ namespace Thorg_Installer
             this.tabLicense.Padding = new System.Windows.Forms.Padding(3);
             this.tabLicense.Size = new System.Drawing.Size(456, 314);
             this.tabLicense.TabIndex = 2;
-            this.tabLicense.Text = "License";
+            this.tabLicense.Tag = "License";
+            this.tabLicense.Text = "2. License";
             this.tabLicense.UseVisualStyleBackColor = true;
             //
             // chkLicense
@@ -211,7 +212,7 @@ namespace Thorg_Installer
             this.tabToS.Name = "tabToS";
             this.tabToS.Size = new System.Drawing.Size(456, 314);
             this.tabToS.TabIndex = 3;
-            this.tabToS.Text = "Terms Of Service";
+            this.tabToS.Text = "3. Terms Of Service";
             this.tabToS.UseVisualStyleBackColor = true;
             //
             // chkSentry
@@ -247,7 +248,7 @@ namespace Thorg_Installer
             this.tabDestination.Padding = new System.Windows.Forms.Padding(3);
             this.tabDestination.Size = new System.Drawing.Size(456, 314);
             this.tabDestination.TabIndex = 1;
-            this.tabDestination.Text = "Setup";
+            this.tabDestination.Text = "4. Setup";
             this.tabDestination.UseVisualStyleBackColor = true;
             //
             // groupBox1
@@ -268,6 +269,7 @@ namespace Thorg_Installer
             this.chkCompGMiner.AutoSize = true;
             this.chkCompGMiner.Checked = true;
             this.chkCompGMiner.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompGMiner.Enabled = false;
             this.chkCompGMiner.Location = new System.Drawing.Point(19, 91);
             this.chkCompGMiner.Name = "chkCompGMiner";
             this.chkCompGMiner.Size = new System.Drawing.Size(106, 17);
@@ -280,6 +282,7 @@ namespace Thorg_Installer
             this.chkCompWasi.AutoSize = true;
             this.chkCompWasi.Checked = true;
             this.chkCompWasi.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCompWasi.Enabled = false;
             this.chkCompWasi.Location = new System.Drawing.Point(19, 67);
             this.chkCompWasi.Name = "chkCompWasi";
             this.chkCompWasi.Size = new System.Drawing.Size(87, 17);
@@ -352,7 +355,7 @@ namespace Thorg_Installer
             this.tabPage1.Size = new System.Drawing.Size(456, 314);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Tag = "Install";
-            this.tabPage1.Text = "Install";
+            this.tabPage1.Text = "5 .Install";
             this.tabPage1.UseVisualStyleBackColor = true;
             //
             // lbProgressError
