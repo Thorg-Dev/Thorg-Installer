@@ -186,7 +186,7 @@ namespace Thorg_Installer
         {
             if (tabWizard.SelectedTab == tabUninstall)
             {
-                tabWizard.ItemSize = new Size(83, 24);
+                tabWizard.ItemSize = new Size(69, 21);
                 tabWizard.TabPages.Remove(tabUninstall);
                 SwitchTo(PAGE_INSTALL);
             }
