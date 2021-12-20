@@ -99,7 +99,7 @@ namespace Thorg_Installer
                 else
                 {
                     btnNext.Enabled = true;
-                    lbProgress.Text = "Already installed";
+                    lbProgress.Text = "Thorg is already installed on your PC.";
                     prgTotal.Visible = false;
                     btnRepair.Visible = true;
                     btnUninstall.Visible = true;
@@ -306,7 +306,7 @@ namespace Thorg_Installer
 
         void BuildUninstallButtonName()
         {
-            if(cboUninstallYagna.Checked && cboUninstallConfiguration.Checked)
+            if (cboUninstallYagna.Checked && cboUninstallConfiguration.Checked)
             {
                 btnConfirmUninstall.Text = "Yes, I want to remove Yagna + Thorg and their configuration files";
             }
@@ -318,18 +318,18 @@ namespace Thorg_Installer
             {
                 btnConfirmUninstall.Text = "Yes, I want to remove Thorg and its configuration";
             }
-            else 
+            else
             {
                 btnConfirmUninstall.Text = "Yes, I want to remove Thorg";
             }
-         
+
         }
         private void DoUninstall()
         {
             try
             {
                 var result = _installer.UninstallThorg(cboUninstallConfiguration.Checked, cboUninstallYagna.Checked);
-              
+
             }
             catch (DirectoryNotFoundException)
             {

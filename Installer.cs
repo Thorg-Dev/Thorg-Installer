@@ -220,14 +220,14 @@ namespace Thorg_Installer
             }
 
             var configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GolemFactory");
-            var yagnaDir1 = Path.Combine(configDir , "yagna");
-            var yagnaDir2 = Path.Combine(configDir , "ya-provider");
-            var thorgConfig = Path.Combine(configDir ,"ThorgMiner");
+            var yagnaDir1 = Path.Combine(configDir, "yagna");
+            var yagnaDir2 = Path.Combine(configDir, "ya-provider");
+            var thorgConfig = Path.Combine(configDir, "ThorgMiner");
 
             if (shouldRemoveConfigFiles && shouldRemoveYagna && System.IO.Directory.Exists(ThorgsPath))
             {
                 System.IO.Directory.Delete(configDir, true);
-             
+
             }
             else if (shouldRemoveYagna)
             {
