@@ -21,11 +21,13 @@ namespace Thorg_Installer
             PAGE_LICENCE = 1,
             PAGE_TOS = 2,
             PAGE_SETUP = 3,
-            PAGE_INSTALL = 4;
+            PAGE_INSTALL = 4,
+            PAGE_UNINSTALL = 5;
 
         public MainWindow()
         {
             InitializeComponent();
+            tabWizard.TabPages.Remove(tabUninstall);
             lbVersion.Text = "Loading...";
             Task.Run(async () =>
             {
@@ -75,27 +77,32 @@ namespace Thorg_Installer
         private void tabWizard_Selected(object sender, TabControlEventArgs e)
         {
             btnBack.Enabled = _step > PAGE_WLECOME && _step != PAGE_INSTALL;
+            btnUninstall.Visible = _step == PAGE_INSTALL;
             btnNext.Enabled = CanDoNext();
             btnCancel.Visible = _step == PAGE_WLECOME;
-            btnReinstall.Visible = false;
+            btnRepair.Visible = false;
             lbProgressError.Visible = false;
             if ("Setup".Equals(e.TabPage.Tag))
             {
                 btnNext.Text = "Install";
+                btnUninstall.Visible = false;
             }
             else if ("Install".Equals(e.TabPage.Tag))
             {
                 _installer.InstallDir = lbOutputPath.Text;
                 if (_installer.Prepare())
                 {
+                    btnUninstall.Visible = false;
                     DoInstall();
+
                 }
                 else
                 {
                     btnNext.Enabled = true;
                     lbProgress.Text = "Already installed";
                     prgTotal.Visible = false;
-                    btnReinstall.Visible = true;
+                    btnRepair.Visible = true;
+                    btnUninstall.Visible = true;
                 }
                 btnNext.Text = "Done";
             }
@@ -170,10 +177,23 @@ namespace Thorg_Installer
                 return entry == null || "yes" == entry?.GetValue("sendReports") as string;
             }
         }
+        private void AlreadyInstalledStep()
+        {
+
+        }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            SwitchTo(_step - 1);
+            if (tabWizard.SelectedTab == tabUninstall)
+            {
+                tabWizard.ItemSize = new Size(83, 24);
+                tabWizard.TabPages.Remove(tabUninstall);
+                SwitchTo(PAGE_INSTALL);
+            }
+            else
+            {
+                SwitchTo(_step - 1);
+            }
         }
 
 
@@ -231,21 +251,23 @@ namespace Thorg_Installer
             }
         }
 
-        private async void btnReinstall_Click(object sender, EventArgs e)
+        private async Task<bool> DoKillThorgProcess()
         {
-            btnReinstall.Visible = false;
-            btnNext.Enabled = false;
             var exePath = _installer.ThorgExePath;
             var processName = Path.GetFileNameWithoutExtension(exePath);
+            bool result = false;
             for (var retry = 0; retry < 5; ++retry)
             {
                 bool sendKill = false;
-                foreach (var thorgProcess in Process.GetProcessesByName(processName))
+                var processess = Process.GetProcessesByName(processName);
+                if (processess.Length == 0) return true;
+                foreach (var thorgProcess in processess)
                 {
                     try
                     {
-                        if (thorgProcess.MainModule.FileName == exePath)
+                        //if (thorgProcess.MainModule.FileName == exePath)
                         {
+                            result = true;
                             thorgProcess.Kill();
                             sendKill = true;
                         }
@@ -253,6 +275,7 @@ namespace Thorg_Installer
                     catch (Win32Exception ex)
                     {
                         Debug.WriteLine($"unable to kill {thorgProcess}: {ex}");
+                        result = false;
                     }
                 }
                 if (sendKill)
@@ -264,8 +287,105 @@ namespace Thorg_Installer
                     break;
                 }
             }
+            return result;
+        }
+        private async void btnReinstall_Click(object sender, EventArgs e)
+        {
+            btnRepair.Visible = false;
+            btnNext.Enabled = false;
+            btnUninstall.Visible = false;
+            var processKilled = await DoKillThorgProcess();
 
-            DoInstall();
+            if (processKilled) DoInstall();
+        }
+
+        private void cboUninstallConfiguration_CheckedChanged(object sender, EventArgs e)
+        {
+            BuildUninstallButtonName();
+        }
+
+        void BuildUninstallButtonName()
+        {
+            if(cboUninstallYagna.Checked && cboUninstallConfiguration.Checked)
+            {
+                btnConfirmUninstall.Text = "Yes, I want to remove Yagna + Thorg and their configuration files";
+            }
+            else if (cboUninstallYagna.Checked)
+            {
+                btnConfirmUninstall.Text = "Yes, I want to remove Thorg and Yagna's configuration";
+            }
+            else if (cboUninstallConfiguration.Checked)
+            {
+                btnConfirmUninstall.Text = "Yes, I want to remove Thorg and its configuration";
+            }
+            else 
+            {
+                btnConfirmUninstall.Text = "Yes, I want to remove Thorg";
+            }
+         
+        }
+        private void DoUninstall()
+        {
+            try
+            {
+                var result = _installer.UninstallThorg(cboUninstallConfiguration.Checked, cboUninstallYagna.Checked);
+              
+            }
+            catch (DirectoryNotFoundException)
+            {
+                lblUninstallError.Text = "uninstallation failed - directory not found"; return;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                lblUninstallError.Text = "uninstallation failed - unathorized access"; return;
+            }
+
+            catch (ArgumentException)
+            {
+                lblUninstallError.Text = "uninstallation failed"; return;
+            }
+            catch (IOException)
+            {
+                lblUninstallError.Text = "uninstallation failed - problem with deleting files"; return;
+            }
+            catch
+            {
+                lblUninstallError.Text = "uninstallation failed";
+                return;
+            }
+            MessageBox.Show("Thorg has been removed from your system.\n\n", "Thorg Installer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
+        }
+
+        private async void btnConfirmUninstall_Click(object sender, EventArgs e)
+        {
+            var processKilled = await DoKillThorgProcess();
+
+            if (processKilled) DoUninstall();
+        }
+
+        private void cboUninstallYagna_CheckedChanged(object sender, EventArgs e)
+        {
+            BuildUninstallButtonName();
+        }
+
+        private void btnUninstall_Click(object sender, EventArgs e)
+        {
+            btnUninstall.Visible = false;
+            lblUninstallError.Text = "";
+            btnRepair.Visible = false;
+            btnBack.Visible = true;
+            btnBack.Enabled = true;
+            btnNext.Visible = false;
+            btnCancel.Visible = true;
+            tabWizard.TabPages.Add(tabUninstall);
+            SwitchTo(PAGE_UNINSTALL);
+            tabWizard.ItemSize = new Size(0, 1); // hides tabs
+            tabWizard.SizeMode = TabSizeMode.Fixed;
+
+
+
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

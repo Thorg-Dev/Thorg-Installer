@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -179,6 +180,11 @@ namespace Thorg_Installer
                 Descriptor.ToFile(DescriptorPath);
             }).ContinueWith((t) =>
             {
+                using (var entry = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
+                {
+                    entry.SetValue("installationDirectory", InstallDir);
+                }
+
                 if (t.IsFaulted)
                 {
                     var sb = new StringBuilder();
@@ -195,6 +201,65 @@ namespace Thorg_Installer
                     });
                 }
             });
+        }
+
+        public bool UninstallThorg(bool shouldRemoveConfigFiles, bool shouldRemoveYagna)
+        {
+            String ThorgsPath = GetThorgsInstalledInstanceDirectory();
+            if (System.IO.Directory.Exists(ThorgsPath))
+            {
+                System.IO.Directory.Delete(ThorgsPath, true);
+                using (var entry = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
+                {
+                    entry.DeleteValue("installationDirectory");
+                }
+            }
+            else
+            {
+                throw new DirectoryNotFoundException("Thorg's installation folder not found");
+            }
+
+            var configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "GolemFactory");
+            var yagnaDir1 = Path.Combine(configDir , "yagna");
+            var yagnaDir2 = Path.Combine(configDir , "ya-provider");
+            var thorgConfig = Path.Combine(configDir ,"ThorgMiner");
+
+            if (shouldRemoveConfigFiles && shouldRemoveYagna && System.IO.Directory.Exists(ThorgsPath))
+            {
+                System.IO.Directory.Delete(configDir, true);
+             
+            }
+            else if (shouldRemoveYagna)
+            {
+                if (System.IO.Directory.Exists(yagnaDir1))
+                {
+                    System.IO.Directory.Delete(yagnaDir1, true);
+                }
+                if (System.IO.Directory.Exists(yagnaDir2))
+                {
+                    System.IO.Directory.Delete(yagnaDir2, true);
+                }
+            }
+            else if (shouldRemoveConfigFiles && System.IO.Directory.Exists(thorgConfig))
+            {
+                if (System.IO.Directory.Exists(thorgConfig))
+                {
+                    System.IO.Directory.Delete(thorgConfig, true);
+                }
+            }
+
+            return true;
+        }
+        private string GetThorgsInstalledInstanceDirectory()
+        {
+            using (var entry = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner"))
+            {
+                if (entry?.GetValue("installationDirectory") is string S)
+                {
+                    return S;
+                }
+            }
+            return null;
         }
 
         /// <summary>
