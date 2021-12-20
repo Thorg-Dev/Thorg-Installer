@@ -224,7 +224,7 @@ namespace Thorg_Installer
             var yagnaDir2 = Path.Combine(configDir, "ya-provider");
             var thorgConfig = Path.Combine(configDir, "ThorgMiner");
 
-            if (shouldRemoveConfigFiles && shouldRemoveYagna && System.IO.Directory.Exists(ThorgsPath))
+            if (shouldRemoveConfigFiles && shouldRemoveYagna && System.IO.Directory.Exists(configDir))
             {
                 System.IO.Directory.Delete(configDir, true);
 
