@@ -26,32 +26,48 @@ namespace Thorg_Installer
         public MainWindow()
         {
             InitializeComponent();
+            lbVersion.Text = "Loading...";
             Task.Run(async () =>
             {
-                var app = await Config.App.Load();
-                Debug.WriteLine("app= {0} / {1}", app.Name, app.Version);
-                this.BeginInvoke((MethodInvoker)delegate ()
+                try
                 {
-                    lbVersion.Text = $"v{app.Version}";
-                    lbOutputPath.Text = _installer.InstallDir;
+                    var app = await Config.App.Load();
+                    Debug.WriteLine("app= {0} / {1}", app.Name, app.Version);
+                    this.BeginInvoke((MethodInvoker)delegate ()
+                    {
+                        lbVersion.Text = $"v{app.Version}";
+                        lbOutputPath.Text = _installer.InstallDir;
 
-                    Action<CheckBox, Config.Component> decorateComponent = (control, component) =>
-                    {
-                        if (component != null)
+                        Action<CheckBox, Config.Component> decorateComponent = (control, component) =>
                         {
-                            control.Text = $"{control.Text} v{component.Version}";
+                            if (component != null)
+                            {
+                                control.Text = $"{control.Text} v{component.Version}";
+                            }
+                        };
+                        decorateComponent(chkCompYagna, app["yagna"]);
+                        decorateComponent(chkCompThorg, app["thorg"]);
+                        decorateComponent(chkCompWasi, app["wasi"]);
+                        decorateComponent(chkCompGMiner, app["gminer"]);
+                        _installer.Descriptor = app;
+                        if (!_installer.Prepare())
+                        {
+                            SwitchTo(4);
                         }
-                    };
-                    decorateComponent(chkCompYagna, app["yagna"]);
-                    decorateComponent(chkCompThorg, app["thorg"]);
-                    decorateComponent(chkCompWasi, app["wasi"]);
-                    decorateComponent(chkCompGMiner, app["gminer"]);
-                    _installer.Descriptor = app;
-                    if (!_installer.Prepare())
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unable to connect to the installation server.\nCheck your internet connection and try again later.\n\n",
+                        "Thorg Installer",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.BeginInvoke((MethodInvoker)delegate ()
                     {
-                        SwitchTo(4);
-                    }
-                });
+                        Close();
+                    });
+                    return;
+                }
+
             });
 
         }
