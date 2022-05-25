@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,12 +25,59 @@ namespace Thorg_Installer
             PAGE_INSTALL = 4,
             PAGE_UNINSTALL = 5;
 
+        public static bool UserIsAdmin()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        public static bool RunElevated()
+        {
+            string args = string.Empty;
+            string[] argsArray = Environment.GetCommandLineArgs();
+            // First entry of the array must be ignored!
+            for (int i = 1; i < argsArray.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(args))
+                    args += " ";
+                args += argsArray[i];
+            }
+            return RunElevated(System.Windows.Forms.Application.ExecutablePath, args);
+        }
+        /// <summary>
+        /// Restarts any application with admin rights.
+        /// </summary>
+        public static bool RunElevated(string fileName, string args)
+        {
+            ProcessStartInfo processInfo = new ProcessStartInfo();
+            processInfo.Verb = "runas";
+            processInfo.FileName = fileName;
+            processInfo.Arguments = args;
+            try
+            {
+                Process.Start(processInfo);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
             tabWizard.TabPages.Remove(tabUninstall);
             lbVersion.Text = "Loading...";
-            Task.Run(async () =>
+
+            if (UserIsAdmin() == false)
+            {
+                RunElevated();
+                Environment.Exit(0);
+            }
+
+            _ = Task.Run(async () =>
             {
                 try
                 {
@@ -58,7 +106,7 @@ namespace Thorg_Installer
                         }
                     });
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     MessageBox.Show("Unable to connect to the installation server.\nCheck your internet connection and try again later.\n\n",
                         "Thorg Installer",

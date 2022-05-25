@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Thorg_Installer.Config;
+using WindowsFirewallHelper;
 
 namespace Thorg_Installer
 {
@@ -200,6 +201,23 @@ namespace Thorg_Installer
                         IsError = true
                     });
                 }
+
+                progress?.Invoke(new InstallerEvent()
+                {
+                    Message = "Attempting to add Thorg to firewall exception",
+                    IsDone = false,
+                });
+
+                var dir = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner").GetValue("installationDirectory").ToString();
+                var rule = FirewallManager.Instance.CreateApplicationRule("Thorg", dir);
+                rule.Direction = FirewallDirection.Outbound;
+                FirewallManager.Instance.Rules.Add(rule);
+
+                progress?.Invoke(new InstallerEvent()
+                {
+                    Message = "Finished",
+                    IsDone = true,
+                });
             });
         }
 
