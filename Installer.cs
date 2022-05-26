@@ -208,10 +208,17 @@ namespace Thorg_Installer
                     IsDone = false,
                 });
 
-                var dir = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner").GetValue("installationDirectory").ToString();
-                var rule = FirewallManager.Instance.CreateApplicationRule("Thorg", dir);
-                rule.Direction = FirewallDirection.Outbound;
-                FirewallManager.Instance.Rules.Add(rule);
+                try
+                {
+                    var dir = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner").GetValue("installationDirectory").ToString();
+                    var rule = FirewallManager.Instance.CreateApplicationRule("Thorg", dir);
+                    rule.Direction = FirewallDirection.Outbound;
+                    FirewallManager.Instance.Rules.Add(rule);
+                } 
+                catch (Exception)
+                {
+
+                }
 
                 progress?.Invoke(new InstallerEvent()
                 {
