@@ -73,8 +73,10 @@ namespace Thorg_Installer
 
             if (UserIsAdmin() == false)
             {
-                RunElevated();
-                Environment.Exit(0);
+                if (RunElevated())
+                {
+                    Environment.Exit(0);
+                }
             }
 
             _ = Task.Run(async () =>
