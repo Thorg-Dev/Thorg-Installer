@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -79,7 +80,7 @@ namespace Thorg_Installer
             return true;
         }
 
-        public void Run(Action<InstallerEvent> progress)
+        public void Run(Action<InstallerEvent> progress, bool AddDefenderException)
         {
             Task.Run(() =>
             {
@@ -202,23 +203,36 @@ namespace Thorg_Installer
                     });
                 }
 
-                progress?.Invoke(new InstallerEvent()
+                if (AddDefenderException)
                 {
-                    Message = "Attempting to add Thorg to firewall exception",
-                    IsDone = false,
-                });
+                    progress?.Invoke(new InstallerEvent()
+                    {
+                        Message = "Attempting to add Thorg to firewall exception",
+                        IsDone = false,
+                    });
 
-                try
-                {
-                    var dir = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GolemFactory\ThorgMiner").GetValue("installationDirectory").ToString();
-                    var rule = FirewallManager.Instance.CreateApplicationRule("Thorg", dir);
-                    rule.Direction = FirewallDirection.Outbound;
-                    FirewallManager.Instance.Rules.Add(rule);
-                } 
-                catch (Exception)
-                {
+                    try
+                    {
+                        var entry = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GolemFactory\ThorgMiner");
 
-                }
+                        var dir = entry.GetValue("installationDirectory").ToString();
+                        var psCommmand = @"Add-MpPreference -ExclusionPath " + dir;
+
+                        var startInfo = new ProcessStartInfo()
+                        {
+                            FileName = "powershell.exe",
+                            Arguments = $"-NoProfile -ExecutionPolicy unrestricted -Command {psCommmand}",
+                            UseShellExecute = true,
+                            Verb = "runas"
+                        };
+                        var pro = Process.Start(startInfo);
+                        pro.WaitForExit();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }                
 
                 progress?.Invoke(new InstallerEvent()
                 {
@@ -228,9 +242,36 @@ namespace Thorg_Installer
             });
         }
 
-        public bool UninstallThorg(bool shouldRemoveConfigFiles, bool shouldRemoveYagna)
+        public bool UninstallThorg(bool shouldRemoveConfigFiles, bool shouldRemoveYagna, bool shouldRemoveDefenderRule)
         {
             String ThorgsPath = GetThorgsInstalledInstanceDirectory();
+
+            if (shouldRemoveDefenderRule)
+            {
+                try
+                {
+                    var entry = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GolemFactory\ThorgMiner");
+
+                    var dir = entry.GetValue("installationDirectory").ToString();
+                    var psCommmand = @"Remove-MpPreference -ExclusionPath " + dir;
+
+                    var startInfo = new ProcessStartInfo()
+                    {
+                        FileName = "powershell.exe",
+                        Arguments = $"-NoProfile -ExecutionPolicy unrestricted -Command {psCommmand}",
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    };
+                    var pro = Process.Start(startInfo);
+                    pro.WaitForExit();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            
+
             if (System.IO.Directory.Exists(ThorgsPath))
             {
                 System.IO.Directory.Delete(ThorgsPath, true);
@@ -272,7 +313,6 @@ namespace Thorg_Installer
                     System.IO.Directory.Delete(thorgConfig, true);
                 }
             }
-
             return true;
         }
         private string GetThorgsInstalledInstanceDirectory()

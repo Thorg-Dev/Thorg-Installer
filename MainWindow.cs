@@ -139,7 +139,7 @@ namespace Thorg_Installer
                     prgTotal.Value = ev.Step;
                 }
                 btnNext.Enabled = ev.IsDone;
-            }));
+            }), AddDefenderCheckbox.Checked);
         }
 
         private void tabWizard_Selecting(object sender, TabControlCancelEventArgs e)
@@ -331,7 +331,7 @@ namespace Thorg_Installer
         {
             try
             {
-                var result = _installer.UninstallThorg(cboUninstallConfiguration.Checked, cboUninstallYagna.Checked);
+                var result = _installer.UninstallThorg(cboUninstallConfiguration.Checked, cboUninstallYagna.Checked, DefenderRuleCheckbox.Checked);
 
             }
             catch (DirectoryNotFoundException)
@@ -371,7 +371,6 @@ namespace Thorg_Installer
         {
             BuildUninstallButtonName();
         }
-
         private void btnUninstall_Click(object sender, EventArgs e)
         {
             btnUninstall.Visible = false;
